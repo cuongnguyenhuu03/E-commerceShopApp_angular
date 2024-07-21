@@ -1,11 +1,15 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { HttpClient, HttpHeaders} from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
+
+
 export class RegisterComponent {
   @ViewChild('registerForm') registerForm!: NgForm;
   // Declare variables corresponding to data fields in the form
@@ -17,15 +21,17 @@ export class RegisterComponent {
   isAccepted: boolean;
   dateOfBirth: Date;
 
-  constructor(){
-    this.phone ="";
-    this.password ="";
-    this.retypePassword ="";
-    this.fullname = "";
-    this.address = "";
+  constructor(private http: HttpClient, private router: Router){
+    this.phone ="7404617563";
+    this.password ="12345676543";
+    this.retypePassword ="12345676543";
+    this.fullname = "MonKey D Lufy";
+    this.address = "Japan";
     this.isAccepted = false;
     this.dateOfBirth = new Date;
-    this.dateOfBirth.setFullYear (this.dateOfBirth.getFullYear() - 18);
+    this.dateOfBirth.setFullYear(this.dateOfBirth.getFullYear() - 18);
+    // inject 
+
   }
 
   onPhoneChange(){
@@ -36,14 +42,46 @@ export class RegisterComponent {
   register() {
     const message = 
           `phone: ${this.phone}` +
-          `password :  ${this.phone}`+
+          `password :  ${this.password}`+
           `retypePassword :  ${this.retypePassword}` + 
           `fullname :  ${this.fullname}` + 
           `dateOfBirth :  ${this.dateOfBirth}` + 
           `address :  ${this.address}` + 
           `isAccepted :  ${this.isAccepted}`;
-    alert(message);
-  }
+
+    const apiUrl = "http://localhost:8090/api/v1/users/register"
+
+    const registerData = {
+      "fullname": this.fullname,
+      "phone_number": this.phone,
+      "address": this.address,
+      "password": this.password,
+      "retype_password": this.retypePassword,
+      "date_of_birth": this.dateOfBirth, 
+      "facebook_account_id": "0",
+      "google_account_id": "0",
+      "role_id": "2"
+    }
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    console.log(registerData);
+    
+    // post
+    this.http.post(apiUrl, registerData, {headers}, )
+      .subscribe({
+        next: (response: any) => {
+          debugger
+          this.router.navigate(['/login']);
+        },
+        complete: () => {
+          debugger
+        },
+        error: (error: any) => {
+          alert(`Can not register, error: ${error.error}`)
+          debugger
+        }
+      });
+    }
+  
 
   // check password match
   checkPasswordMatch(){
@@ -71,4 +109,6 @@ export class RegisterComponent {
     }
 
   }
+  
 }
+
