@@ -10,6 +10,7 @@ import { RegisterComponent } from './register/register.component';
 import { DetailProductComponent } from './detail-product/detail-product.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import {} from './service/user.service';
 
 @NgModule({
   declarations: [

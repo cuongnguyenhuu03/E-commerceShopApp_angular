@@ -1,7 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Router } from '@angular/router';
+import {UserService} from '../service/user.service';
+import { HttpHeaders } from '@angular/common/http';
+import { RegisterDTO } from '../dtos/register.dto';
 
 @Component({
   selector: 'app-register',
@@ -13,19 +15,19 @@ import { Router } from '@angular/router';
 export class RegisterComponent {
   @ViewChild('registerForm') registerForm!: NgForm;
   // Declare variables corresponding to data fields in the form
-  phone: String;
-  password: String;
-  retypePassword: String;
-  fullname: String;
-  address: String;
+  phone: string;
+  password: string;
+  retypePassword: string;
+  fullname: string;
+  address: string;
   isAccepted: boolean;
   dateOfBirth: Date;
 
-  constructor(private http: HttpClient, private router: Router){
-    this.phone ="7404617563";
+  constructor( private router: Router, private UserService: UserService){
+    this.phone ="7404097563";
     this.password ="12345676543";
     this.retypePassword ="12345676543";
-    this.fullname = "MonKey D Lufy";
+    this.fullname = "test 1";
     this.address = "Japan";
     this.isAccepted = false;
     this.dateOfBirth = new Date;
@@ -49,38 +51,34 @@ export class RegisterComponent {
           `address :  ${this.address}` + 
           `isAccepted :  ${this.isAccepted}`;
 
-    const apiUrl = "http://localhost:8090/api/v1/users/register"
+    
 
-    const registerData = {
+    const RegisterDTO:RegisterDTO = {
       "fullname": this.fullname,
       "phone_number": this.phone,
       "address": this.address,
       "password": this.password,
       "retype_password": this.retypePassword,
       "date_of_birth": this.dateOfBirth, 
-      "facebook_account_id": "0",
-      "google_account_id": "0",
-      "role_id": "2"
+      "facebook_account_id": 0,
+      "google_account_id": 0,
+      "role_id": 2
     }
-    const headers = new HttpHeaders({'Content-Type': 'application/json'});
-    console.log(registerData);
     
-    // post
-    this.http.post(apiUrl, registerData, {headers}, )
-      .subscribe({
-        next: (response: any) => {
-          debugger
-          this.router.navigate(['/login']);
-        },
-        complete: () => {
-          debugger
-        },
-        error: (error: any) => {
-          alert(`Can not register, error: ${error.error}`)
-          debugger
-        }
-      });
-    }
+    this.UserService.register(RegisterDTO).subscribe({
+      next: (response: any) => {
+        debugger
+        this.router.navigate(['/login']);          
+      },
+      complete: () => {
+        debugger
+      },
+      error: (error: any) => {          
+        alert(`Cannot register, error: ${error.error}`)          
+      }
+    })
+
+   }
   
 
   // check password match
