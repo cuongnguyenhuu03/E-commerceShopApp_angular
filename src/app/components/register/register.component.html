@@ -7,19 +7,19 @@
                     <h2 class="register-header">Register</h2>
 
                     <div class="form-group">
-                        <label for="phoneNumber">Phone's number</label>
+                        <label for="phoneNumber">Phone number</label>
                         <input 
                             type="text" 
                             class="form-control" 
-                            [(ngModel)] = "phone" 
-                            (input) = "onPhoneChange()"
+                            [(ngModel)] = "phoneNumber" 
+                            (input) = "onPhoneNumberChange()"
                             name="phone" 
                             (focus)="registerForm.form.markAsTouched()"
                             required 
                             id="phoneNumber">
                         <div class="divider-nospace"></div> 
                         <p class="text-danger"
-                            *ngIf="phone.length < 9 && registerForm.form.touched">
+                            *ngIf="phoneNumber.length < 9 && registerForm.form.touched">
                             Phone number must have at least 9 characters
                         </p>
                         

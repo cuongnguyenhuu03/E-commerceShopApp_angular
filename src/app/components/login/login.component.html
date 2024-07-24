@@ -5,8 +5,15 @@
                 <h2 class="login-header">Đăng nhập</h2>
                 <div class="form-group">
                     <label for="phoneNumber">Phone</label>
-                    <input type="text" class="form-control"  
-                    id="phoneNumber">
+                    <input type="text" 
+                           class="form-control" 
+                           id="phoneNumber"
+                           [(ngModel)]="phoneNumber"
+                            (input)="onPhoneNumberChange()"
+                            name="phone"
+                            (focus)="loginForm.form.markAsTouched()"
+                    id="phoneNumber"
+                    >
                     <div class="divider-nospace"></div>
                 </div>
                 <div class="mt-5"></div>
@@ -14,6 +21,8 @@
                     <label for="password">Mật khẩu</label>
                     <input type="password"                            
                         name="password"
+                        [(ngModel)]="password"                            
+                        
                         placeholder="Ít nhất 3 ký tự" 
                         class="form-control" id="password">
                     <i class="password-toggle fas fa-eye-slash"></i>
@@ -44,7 +53,7 @@
                   
                   <button 
                     type="button" 
-                    
+                    (click)="login()"
                     class="login-button">Đăng nhập</button>
                   <div class="divider"></div>
                   <p class="text-center">Bạn chưa đăng ký? <span>

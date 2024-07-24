@@ -1,9 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import {UserService} from '../service/user.service';
+import {UserService} from '../../service/user.service';
 import { HttpHeaders } from '@angular/common/http';
-import { RegisterDTO } from '../dtos/register.dto';
+import { RegisterDTO } from '../../dtos/user/register.dto';
 
 @Component({
   selector: 'app-register',
@@ -15,7 +15,7 @@ import { RegisterDTO } from '../dtos/register.dto';
 export class RegisterComponent {
   @ViewChild('registerForm') registerForm!: NgForm;
   // Declare variables corresponding to data fields in the form
-  phone: string;
+  phoneNumber: string;
   password: string;
   retypePassword: string;
   fullname: string;
@@ -24,7 +24,7 @@ export class RegisterComponent {
   dateOfBirth: Date;
 
   constructor( private router: Router, private UserService: UserService){
-    this.phone ="7404097563";
+    this.phoneNumber ="7404097563";
     this.password ="12345676543";
     this.retypePassword ="12345676543";
     this.fullname = "test 1";
@@ -36,14 +36,14 @@ export class RegisterComponent {
 
   }
 
-  onPhoneChange(){
-    console.log(`phone number typed" ${this.phone}`)
+  onPhoneNumberChange(){
+    console.log(`phone number typed" ${this.phoneNumber}`)
     // validate phone number 
   }
 
   register() {
     const message = 
-          `phone: ${this.phone}` +
+          `phone: ${this.phoneNumber}` +
           `password :  ${this.password}`+
           `retypePassword :  ${this.retypePassword}` + 
           `fullname :  ${this.fullname}` + 
@@ -55,7 +55,7 @@ export class RegisterComponent {
 
     const RegisterDTO:RegisterDTO = {
       "fullname": this.fullname,
-      "phone_number": this.phone,
+      "phone_number": this.phoneNumber,
       "address": this.address,
       "password": this.password,
       "retype_password": this.retypePassword,
