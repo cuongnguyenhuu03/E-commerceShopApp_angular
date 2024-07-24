@@ -9,8 +9,12 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { DetailProductComponent } from './components/detail-product/detail-product.component';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { 
+  HttpClientModule, 
+  HTTP_INTERCEPTORS 
+} from '@angular/common/http';
 import {} from './service/user.service';
+import { TokenInterceptor } from './interceptors/token.interceptor';
 
 @NgModule({
   declarations: [
@@ -29,7 +33,13 @@ import {} from './service/user.service';
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [
     //HomeComponent,
     //OrderComponent
