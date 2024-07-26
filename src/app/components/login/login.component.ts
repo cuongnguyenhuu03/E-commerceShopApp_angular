@@ -60,8 +60,8 @@ export class LoginComponent {
     const LoginDTO: LoginDTO = {
       "phone_number": this.phoneNumber,
       "password": this.password,
-      "role_id": this.selectedRole?.id ?? 2
-      // "role_id":  2
+      //"role_id": this.selectedRole?.id ?? 2
+      "role_id":  2
     }
     
     this.UserService.login(LoginDTO).subscribe({
