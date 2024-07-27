@@ -48,7 +48,7 @@ export class HomeComponent implements OnInit {
   }
   
   searchProducts() {
-    this.currentPage = 1;
+    this.currentPage = 0;
     this.itemsPerPage = 12;
     debugger
     this.getProducts(this.keyword, this.selectedCategoryId, this.currentPage, this.itemsPerPage);
